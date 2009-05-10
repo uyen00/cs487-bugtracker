@@ -17,6 +17,56 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public class JdbcBugTrackerDao implements BugTrackerDao {
+	public void createBug(Bug bug) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void createComment(Comment comment) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void createProductCategory(ProductCategory product) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Set<ProductCategory> getAllProducts() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Bug getBug(Integer bugId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Set<Bug> getBugs(Integer productId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void getProductCategory(ProductCategory product) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void updateBug(Bug bug) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void updateComment(Comment comment) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void updateProductCategory(ProductCategory product) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	private JdbcTemplate jdbcTemplate;
 
 	public JdbcTemplate getJdbcTemplate() {

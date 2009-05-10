@@ -2,7 +2,7 @@ package com.gheewhiz;
 
 import java.util.Set;
 
-public class ProdcuctCategory {
+public class ProductCategory {
 	private Integer productCategoryId;
 	private String version;
 	private Account manager;
