@@ -28,6 +28,32 @@ ALTER TABLE AccountEntitlement ADD CONSTRAINT FK_AccountEntitlement_Account
 	
 ALTER TABLE AccountEntitlement ADD CONSTRAINT FK_AccountEntitlement_Entitlement
     FOREIGN KEY (account_id) REFERENCES Account(account_id);
+
+CREATE TABLE Product (
+    product_id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY
+    	(START WITH 1, INCREMENT BY 1),
+    PRIMARY KEY(product_id)
+);
+
+CREATE TABLE Bug (
+    bug_id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY
+    	(START WITH 1, INCREMENT BY 1),
+    product_id INTEGER NOT NULL,
+    PRIMARY KEY(bug_id)
+);
+
+ALTER TABLE Bug ADD CONSTRAINT FK_Bug_Product
+    FOREIGN KEY (product_id) REFERENCES Product(product_id);
+
+CREATE TABLE Comment (
+    comment_id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY
+    	(START WITH 1, INCREMENT BY 1),
+    bug_id INTEGER NOT NULL,
+    PRIMARY KEY(comment_id)
+);
+
+ALTER TABLE Comment ADD CONSTRAINT FK_Comment_Bug
+    FOREIGN KEY (bug_id) REFERENCES Bug(bug_id);
     
 INSERT INTO Entitlement (entitlement_type) VALUES ('MANAGER');
 INSERT INTO Entitlement (entitlement_type) VALUES ('DEVELOPER');
