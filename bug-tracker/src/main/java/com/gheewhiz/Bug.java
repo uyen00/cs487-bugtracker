@@ -79,7 +79,7 @@ public class Bug {
 	}
 
 	public void setShortDesc(String shortdesc) {
-		this.shortdesc = Comment.SHORTDESC.setComment(shortdesc);
+		this.shortdesc = shortdesc;
 	}
 	
 	public String getShortDesc() {
@@ -87,7 +87,7 @@ public class Bug {
 	}
 	
 	public void setSteps(String steps) {
-		this.steps = Comment.STEPS.setComment(steps);
+		this.steps = steps;
 	}
 	
 	public String getSteps() {
@@ -95,7 +95,7 @@ public class Bug {
 	}
 	
 	public void setMoreComments(String morecomments) {
-		this.morecomments = Comment.MORECOMMENTS.setComment(morecomments);
+		this.morecomments = morecomments;
 	}
 	
 	public String getMoreComments() {
