@@ -6,16 +6,14 @@ import java.util.Set;
 public class Bug {
 
 	Integer bugId;
+	Integer productId;
 	String state;
-	String prodCategory;
-	String prodVersion;
 	String resolution="Not set";
 	java.util.Date opened;
 	
 	//comments
 	String shortdesc;
 	String steps;
-	String morecomments;
 	
 	Set<Comment> comments;
 	
@@ -30,6 +28,14 @@ public class Bug {
 	public Integer getBugId() {
 		return bugId;
 	}
+	
+	public Integer getProductId() {
+		return productId;
+	}
+	
+	public void setProductId(Integer productId) {
+		this.productId = productId;
+	}
 
 	public void setState(String state) {
 		this.state = state;
@@ -39,28 +45,31 @@ public class Bug {
 		return state;
 	}
 	
-	public void setProdVersion(String prodVersion) {
-		this.prodVersion = prodVersion;
+	public java.util.Date getOpened() {
+		return opened;
 	}
 
-	public String getProdVersion() {
-		return prodVersion;
-	}
-	
-	public void setProdCategory(String prodCategory) {
-		this.prodCategory = prodCategory;
-	}
-
-	public String getProdCategory() {
-		return prodCategory;
-	}
-	
-	public void setDateOpened(java.util.Date opened) {
+	public void setOpened(java.util.Date opened) {
 		this.opened = opened;
 	}
 
-	public java.util.Date getDateOpened() {
-		return opened;
+	public String getShortdesc() {
+		return shortdesc;
+	}
+
+	public void setShortdesc(String shortdesc) {
+		this.shortdesc = shortdesc;
+	}
+
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
+	}
+	
+	public Set<Comment> getComments() {
+		if (comments == null) {
+			return new HashSet<Comment>();
+		}
+		return comments;
 	}
 	
 	public void setResolution(String resolution) {
@@ -71,35 +80,12 @@ public class Bug {
 		return resolution;
 	}
 
-	public Set<Comment> getComments() {
-		if (comments == null) {
-			return new HashSet<Comment>();
-		}
-		return comments;
-	}
-
-	public void setShortDesc(String shortdesc) {
-		this.shortdesc = shortdesc;
-	}
-	
-	public String getShortDesc() {
-		return shortdesc;
-	}
-	
 	public void setSteps(String steps) {
 		this.steps = steps;
 	}
 	
 	public String getSteps() {
 		return steps;
-	}
-	
-	public void setMoreComments(String morecomments) {
-		this.morecomments = morecomments;
-	}
-	
-	public String getMoreComments() {
-		return morecomments;
 	}
 	
 }
