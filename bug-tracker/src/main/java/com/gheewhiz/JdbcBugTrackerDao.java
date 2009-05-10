@@ -18,8 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class JdbcBugTrackerDao implements BugTrackerDao {
 	public void createBug(Bug bug) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void createComment(Comment comment) {

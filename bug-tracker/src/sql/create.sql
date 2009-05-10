@@ -71,6 +71,8 @@ CREATE TABLE Bug (
     product_id INTEGER NOT NULL,
     resolution VARCHAR(64) NOT NULL,
     open_date TIMESTAMP NOT NULL,
+    steps VARCHAR(300) NOT NULL,
+    shortdesc VARCHAR(300) NOT NULL,
     PRIMARY KEY(bug_id)
 );
 
