@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,7 +19,34 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class JdbcBugTrackerDao implements BugTrackerDao {
 	public void createBug(Bug bug) {
-
+		final Bug dbBug = new Bug();
+		dbBug.setState(bug.getState());
+		dbBug.setProductId(bug.getProductId());
+		dbBug.setResolution(bug.getResolution());
+		dbBug.setOpened(bug.getOpened());
+		dbBug.setSteps(bug.getSteps());
+		dbBug.setShortdesc(bug.getShortdesc());
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		jdbcTemplate.update(new PreparedStatementCreator() {
+			public PreparedStatement createPreparedStatement(Connection con)
+					throws SQLException {
+				PreparedStatement ps = con
+						.prepareStatement(
+								"insert into Bug (state, product_id,  resolution, open_date, steps, shortdesc) values (?, ?, ?, ?, ?, ?)",
+								Statement.RETURN_GENERATED_KEYS);
+				ps.setString(1, dbBug.getState());
+				ps.setInt(2, dbBug.getProductId());
+				ps.setString(3, dbBug.getResolution());
+				Timestamp ts = new Timestamp(dbBug.getOpened().getTime());
+				ps.setTimestamp(4, ts);
+				ps.setString(5, dbBug.getSteps());
+				ps.setString(6, dbBug.getShortdesc());
+				
+				return ps;
+			}
+		}, keyHolder);
+		Integer bugId = keyHolder.getKey().intValue();
+		dbBug.setBugId(bugId);
 	}
 
 	public void createComment(Comment comment) {
@@ -37,7 +65,24 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 	}
 
 	public Bug getBug(Integer bugId) {
-		// TODO Auto-generated method stub
+		final Bug bug = new Bug();
+		jdbcTemplate.query("select * from bug where bug_id = ?",
+				new Object[] { bugId }, new RowCallbackHandler() {
+					public void processRow(ResultSet rs) throws SQLException {
+						Integer bugId = rs.getInt("bug_id");
+						bug.setBugId(bugId);
+						bug.setState(rs.getString("state"));
+						bug.setProductId(rs.getInt("product_id"));
+						bug.setResolution(rs.getString("resolution"));
+					    bug.setOpened(rs.getDate("open_date"));
+					    bug.setSteps(rs.getString("steps"));
+					    bug.setShortdesc(rs.getString("shortdesc"));
+						//account.setEntitlements(getAccountEntitlements(accountId));
+					}
+				});
+		if (bugId.equals(bug.getBugId())) {
+			return bug;
+		}
 		return null;
 	}
 
