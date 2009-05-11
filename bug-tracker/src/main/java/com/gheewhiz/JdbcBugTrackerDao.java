@@ -74,6 +74,7 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 	}
 
 	public ProductCategory createProductCategory(ProductCategory product) {
+		//TODO: CREATE NAME
 		final ProductCategory dbProduct = new ProductCategory();
 		dbProduct.setManager(product.getManager());
 		dbProduct.setVersion(product.getVersion());
@@ -104,6 +105,7 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 						product.setVersion(rs.getString("version"));
 						product.setProductCategoryId(rs.getInt("product_id"));
 						//TODO: NEED TO GET DEVELOPERS AND QA
+						//TODO: GET NAME
 						products.add(product);
 					}
 				});
@@ -147,6 +149,7 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 						product.setVersion(rs.getString("version"));
 						product.setProductCategoryId(rs.getInt("product_id"));
 						//TODO: NEED TO GET DEVELOPERS AND QA
+						//TODO: Get NAME
 					}
 				});
 		if (productId.equals(product.getProductCategoryId())) {
@@ -161,19 +164,36 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 	}
 
 	public void updateComment(Comment comment) {
-//		.update(
-//				"update Comment set password =?,  screen_name = ? where account_id = ?",
-//				new Object[] { account.getPassword(),
-//						account.getScreenName(), account.getAccountId() });
-//updateAccountEntitlements(account.getAccountId(), account
-//		.getEntitlements());
+		jdbcTemplate.update(
+				"update Product set bug_id = ?, comment = ?, account_id = ? where comment_id = ?",
+				new Object[] { comment.getBugId(), comment.getComment(),
+						comment.getCommenter().getAccountId(), comment.getCommentId() });
 	}
 
 	public void updateProductCategory(ProductCategory product) {
-		// TODO Auto-generated method stub
-		
+		jdbcTemplate
+		.update(
+				"update Product set manager_id = ?, version = ? where account_id = ?",
+				new Object[] { product.getManager().getAccountId(), 
+						product.getVersion(), product.getProductCategoryId() });
+		//TODO: Update Name
 	}
 
+	public Set<Comment> getComments(Integer bugId) {
+		final Set<Comment> comments = new HashSet<Comment>();
+		jdbcTemplate.query("select * from Comment where bud_id = ?", new Object[] { bugId }, 
+				new RowCallbackHandler() {
+					public void processRow(ResultSet rs) throws SQLException {
+						Comment comment = new Comment();
+						comment.setBugId(rs.getInt("bug_id"));
+						comment.setComment(rs.getString("comment"));
+						comment.setCommenter(getAccount(rs.getInt("account_id")));
+						comment.setCommentId(rs.getInt("comment_id"));
+					}
+				});
+		return comments;
+	}
+	
 	private JdbcTemplate jdbcTemplate;
 
 	public JdbcTemplate getJdbcTemplate() {
