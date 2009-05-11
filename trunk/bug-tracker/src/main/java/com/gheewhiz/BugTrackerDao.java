@@ -33,4 +33,6 @@ public interface BugTrackerDao {
 	public Set<ProductCategory> getAllProducts();
 	
 	public Set<Bug> getBugs(Integer productId);
+	
+	public Set<Comment> getComments(Integer bugId);
 }
