@@ -125,10 +125,10 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 					    bug.setOpened(rs.getDate("open_date"));
 					    bug.setSteps(rs.getString("steps"));
 					    bug.setShortdesc(rs.getString("shortdesc"));
-						//account.setEntitlements(getAccountEntitlements(accountId));
 					}
 				});
-		if (bugId.equals(bug.getBugId())) {
+		if (bugId.equals(bug.getBugId())) {			
+			bug.setComments(getComments(bugId));
 			return bug;
 		}
 		return null;
@@ -159,8 +159,12 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 	}
 
 	public void updateBug(Bug bug) {
-		// TODO Auto-generated method stub
-		
+		jdbcTemplate
+				.update(
+						"update Bug set state =?,  product_id = ?, resolution = ?, open_date = ?, state = ?, shortdesc =? where bug_id = ?",
+						new Object[] { bug.getState(),
+					    bug.getProductId(), bug.getResolution(), bug.getOpened(), bug.getSteps(), bug.getShortdesc(), bug.getBugId() });
+		//updateComment();
 	}
 
 	public void updateComment(Comment comment) {
