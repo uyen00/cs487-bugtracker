@@ -20,15 +20,15 @@ public interface BugTrackerDao {
 	
 	public Bug getBug(Integer bugId);
 	
-	public void createComment(Comment comment);
+	public Comment createComment(Comment comment);
 	
 	public void updateComment(Comment comment);
 	
-	public void createProductCategory(ProductCategory product);
+	public ProductCategory createProductCategory(ProductCategory product);
 	
 	public void updateProductCategory(ProductCategory product);
 	
-	public void getProductCategory(ProductCategory product);
+	public ProductCategory getProductCategory(Integer productId);
 	
 	public Set<ProductCategory> getAllProducts();
 	

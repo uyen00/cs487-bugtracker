@@ -49,19 +49,65 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 		dbBug.setBugId(bugId);
 	}
 
-	public void createComment(Comment comment) {
-		// TODO Auto-generated method stub
-		
+	public Comment createComment(Comment comment) {
+		final Comment dbComment = new Comment();
+		dbComment.setBugId(comment.getBugId());
+		dbComment.setComment(comment.getComment());
+		dbComment.setCommenter(comment.getCommenter());
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		jdbcTemplate.update(new PreparedStatementCreator() {
+			public PreparedStatement createPreparedStatement(Connection con)
+					throws SQLException {
+				PreparedStatement ps = con
+						.prepareStatement(
+								"insert into Comment (bug_id, comment, commenter_id) values (?, ?, ?)",
+								Statement.RETURN_GENERATED_KEYS);
+				ps.setInt(1, dbComment.getBugId());
+				ps.setString(2, dbComment.getComment());
+				ps.setInt(3, dbComment.getCommenter().getAccountId());
+				return ps;
+			}
+		}, keyHolder);
+		Integer commentId = keyHolder.getKey().intValue();
+		dbComment.setCommentId(commentId);
+		return dbComment;
 	}
 
-	public void createProductCategory(ProductCategory product) {
-		// TODO Auto-generated method stub
-		
+	public ProductCategory createProductCategory(ProductCategory product) {
+		final ProductCategory dbProduct = new ProductCategory();
+		dbProduct.setManager(product.getManager());
+		dbProduct.setVersion(product.getVersion());
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		jdbcTemplate.update(new PreparedStatementCreator() {
+			public PreparedStatement createPreparedStatement(Connection con)
+					throws SQLException {
+				PreparedStatement ps = con
+						.prepareStatement(
+								"insert into Comment (manager_id, version) values (?, ?)",
+								Statement.RETURN_GENERATED_KEYS);
+				ps.setInt(1, dbProduct.getManager().getAccountId());
+				ps.setString(2, dbProduct.getVersion());
+				return ps;
+			}
+		}, keyHolder);
+		Integer productCategoryId = keyHolder.getKey().intValue();
+		dbProduct.setProductCategoryId(productCategoryId);
+		return dbProduct;
 	}
 
 	public Set<ProductCategory> getAllProducts() {
-		// TODO Auto-generated method stub
-		return null;
+		final Set<ProductCategory> products = new HashSet<ProductCategory>();
+		jdbcTemplate.query("select * from Product", new RowCallbackHandler() {
+					public void processRow(ResultSet rs) throws SQLException {
+						ProductCategory product = new ProductCategory();
+						product.setManager(getAccount(rs.getInt("manager_id")));
+						product.setVersion(rs.getString("version"));
+						product.setProductCategoryId(rs.getInt("product_id"));
+						//TODO: NEED TO GET DEVELOPERS AND QA
+						products.add(product);
+					}
+				});
+		return products;
 	}
 
 	public Bug getBug(Integer bugId) {
@@ -91,9 +137,22 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 		return null;
 	}
 
-	public void getProductCategory(ProductCategory product) {
-		// TODO Auto-generated method stub
-		
+	public ProductCategory getProductCategory(Integer productId) {
+		final ProductCategory product = new ProductCategory();
+		jdbcTemplate.query("select * from Product where product_id = ?",
+				new Object[] { productId }, new RowCallbackHandler() {
+					public void processRow(ResultSet rs) throws SQLException {
+						ProductCategory product = new ProductCategory();
+						product.setManager(getAccount(rs.getInt("manager_id")));
+						product.setVersion(rs.getString("version"));
+						product.setProductCategoryId(rs.getInt("product_id"));
+						//TODO: NEED TO GET DEVELOPERS AND QA
+					}
+				});
+		if (productId.equals(product.getProductCategoryId())) {
+			return product;
+		}
+		return null;
 	}
 
 	public void updateBug(Bug bug) {
@@ -102,8 +161,12 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 	}
 
 	public void updateComment(Comment comment) {
-		// TODO Auto-generated method stub
-		
+//		.update(
+//				"update Comment set password =?,  screen_name = ? where account_id = ?",
+//				new Object[] { account.getPassword(),
+//						account.getScreenName(), account.getAccountId() });
+//updateAccountEntitlements(account.getAccountId(), account
+//		.getEntitlements());
 	}
 
 	public void updateProductCategory(ProductCategory product) {
