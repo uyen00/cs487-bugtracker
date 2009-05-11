@@ -31,7 +31,7 @@ function onlyNumbers(evt)
 	<%
 		Account account = JspUtil.getAccount(request);
 		if (account != null) { 
-			if(account.getAccountType().equalsIgnoreCase("moderator")) {
+			if(account.isEntitledWIthAdmin()) {
 	%>
 	<li><a href="./moderate.html">Moderate<span class="tab-l"></span><span
 		class="tab-r"></span></a></li>

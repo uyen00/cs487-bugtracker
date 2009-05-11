@@ -15,10 +15,6 @@
 		<td><span>Screen name: </td>
 		<td><%=account.getScreenName()%></span></td>
 	</tr>
-	<tr>
-		<td><span>Account Type: </td>
-		<td><%=account.getAccountType()%></span></td>
-	</tr>
 </table>
 
 <form method="post" action="update-password.html">
