@@ -53,11 +53,12 @@ public class BugTrackerService {
 		return bugTrackerDao.getProductCategory(productId);
 	}
 	
-	public Bug createBug(Integer productId, String state, String resolution, java.util.Date opened, String shortdesc, String steps, Set<Comment> comments) {
+	public Bug createBug(Integer productId, String state, String resolution, String shortdesc, String steps, Set<Comment> comments) {
 		Bug bug = new Bug();
 		bug.setProductId(productId);
 		bug.setState(state);
 		bug.setResolution(resolution);
+		java.util.Date opened = new java.util.Date();
 		bug.setOpened(opened);
 		bug.setShortdesc(shortdesc);
 		bug.setSteps(steps);
