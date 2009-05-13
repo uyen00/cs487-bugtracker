@@ -17,4 +17,5 @@
 	</a></td></tr>
 <% } %>
 </table>
+<a href="create-product.html"><b>New Product</b></a>
 <jsp:include page="footer.jsp" />

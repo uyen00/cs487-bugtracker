@@ -48,7 +48,11 @@ public class BugTrackerService {
 	public Bug getBug(Integer bugID) {
 		return bugTrackerDao.getBug(bugID);
 	}
-		
+	
+	public ProductCategory getProduct(Integer productId) {
+		return bugTrackerDao.getProductCategory(productId);
+	}
+	
 	public Bug createBug(Integer productId, String state, String resolution, java.util.Date opened, String shortdesc, String steps, Set<Comment> comments) {
 		Bug bug = new Bug();
 		bug.setProductId(productId);

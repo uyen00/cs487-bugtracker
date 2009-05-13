@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class BugController {
@@ -19,7 +20,9 @@ public class BugController {
 	}
 	
 	@RequestMapping(value = { "/bugs.html" })
-	public String handleBugs(HttpSession session, Integer productId, Model model) {
+	public String handleBugs(HttpSession session, 
+			@RequestParam("productId")Integer productId, Model model) {
+		model.addAttribute("product", bugTrackerService.getProduct(productId));
 		model.addAttribute("bugs", bugTrackerService.getBugs(productId));
 		return "bugs";
 	}
