@@ -46,8 +46,8 @@ public class ModerationController {
 		if (!isAuthorized(session)) {
 			return "unauthorized";
 		}
-		bugTrackerService.createAccount(screenName, memberId, password,
-				memberType, null);
+		bugTrackerService.createAccount(screenName, password,
+				null);
 		// model.addAttribute("emailMap", wootubeService.getEmailMap());
 		// model.addAttribute("screenNameMap",
 		// wootubeService.getScreenNameMap());
