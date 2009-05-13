@@ -39,6 +39,7 @@ ALTER TABLE AccountEntitlement ADD CONSTRAINT FK_AccountEntitlement_Entitlement
 CREATE TABLE Product (
     product_id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY
     	(START WITH 1, INCREMENT BY 1),
+    name VARCHAR(64),
     version VARCHAR(32),
     manager_id INTEGER NOT NULL,
     PRIMARY KEY(product_id)
