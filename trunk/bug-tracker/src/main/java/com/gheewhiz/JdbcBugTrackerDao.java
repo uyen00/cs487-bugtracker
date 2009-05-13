@@ -136,8 +136,22 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 	}
 
 	public Set<Bug> getBugs(Integer productId) {
-		// TODO Auto-generated method stub
-		return null;
+		final Set<Bug> bugs = new HashSet<Bug>();
+		jdbcTemplate.query("select * from bug where product_id = ?",
+				new Object[] { productId }, new RowCallbackHandler() {
+					public void processRow(ResultSet rs) throws SQLException {
+						Bug bug = new Bug();
+						bug.setBugId(rs.getInt("bug_id"));
+						bug.setState(rs.getString("state"));
+						bug.setProductId(rs.getInt("product_id"));
+						bug.setResolution(rs.getString("resolution"));
+					    bug.setOpened(rs.getDate("open_date"));
+					    bug.setSteps(rs.getString("steps"));
+					    bug.setShortdesc(rs.getString("shortdesc"));
+					    bugs.add(bug);
+					}
+				});
+		return bugs;
 	}
 
 	public ProductCategory getProductCategory(Integer productId) {
