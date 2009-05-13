@@ -4,6 +4,7 @@ import java.util.Set;
 
 public class ProductCategory {
 	private Integer productCategoryId;
+	private String name;
 	private String version;
 	private Account manager;
 	private Set<Account> QA;
@@ -17,6 +18,14 @@ public class ProductCategory {
 		this.productCategoryId = productCategoryId;
 	}
 
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	public String getVersion() {
 		return version;
 	}
