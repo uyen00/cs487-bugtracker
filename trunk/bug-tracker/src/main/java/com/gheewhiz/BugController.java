@@ -28,19 +28,19 @@ public class BugController {
 	}
 	
 	@RequestMapping(value = { "/bug.html" })
-	public String handleBug(HttpSession session, Integer bugId, Model model) {
+	public String handleBug(HttpSession session, @RequestParam("bugId")Integer bugId, Model model) {
 		model.addAttribute("bugs", bugTrackerService.getBug(bugId));
 		return "bug";
 	}
 	
 	@RequestMapping(value = { "/create-bug.html" })
-	public String handleCreateBug(HttpSession session, Integer productId, String state, String resolution, java.util.Date opened, String shortdesc, String steps, Set<Comment> comments, Model model) {
-		model.addAttribute("create-bug", bugTrackerService.createBug(productId, state, resolution, opened, shortdesc, steps, comments));
+	public String handleCreateBug(HttpSession session, @RequestParam("productId")Integer productId, @RequestParam("state")String state, @RequestParam("resolution")String resolution, @RequestParam("shortdesc")String shortdesc, @RequestParam("steps")String steps, @RequestParam("comments")Set<Comment> comments, Model model) {
+		model.addAttribute("create-bug", bugTrackerService.createBug(productId, state, resolution, shortdesc, steps, comments));
 		return "create-bug";
 	}
 	
 	@RequestMapping(value = { "/create-comment.html" })
-	public String handleCreateComment(HttpSession session, String comment, Integer bugId, Model model) {
+	public String handleCreateComment(HttpSession session, @RequestParam("comment")String comment, @RequestParam("bugId")Integer bugId, Model model) {
 		model.addAttribute("create-comment", bugTrackerService.createComment(comment, bugId, getSessionAccount(session)));
 		return "create-comment";
 	}
@@ -52,7 +52,7 @@ public class BugController {
 	}
 	
 	@RequestMapping(value = { "/create-product.html" })
-	public String handleCreateProduct(HttpSession session, String name, String version, Account manager, Set<Account> qa, Set<Account> developers, Model model) {
+	public String handleCreateProduct(HttpSession session, @RequestParam("name")String name, @RequestParam("version")String version, @RequestParam("manager")Account manager, @RequestParam("qa")Set<Account> qa, @RequestParam("developers")Set<Account> developers, Model model) {
 		model.addAttribute("create-product", bugTrackerService.createProductCategory(name, version, manager, qa, developers));
 		return "create-product";
 	}
