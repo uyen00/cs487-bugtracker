@@ -37,8 +37,8 @@ public class BugController {
 	}
 	
 	@RequestMapping(value = { "/create-comment.html" })
-	public String handleCreateComment(HttpSession session, String comment, Integer bugId, Account commenter, Model model) {
-		model.addAttribute("create-comment", bugTrackerService.createComment(comment, bugId, commenter));
+	public String handleCreateComment(HttpSession session, String comment, Integer bugId, Model model) {
+		model.addAttribute("create-comment", bugTrackerService.createComment(comment, bugId, getSessionAccount(session)));
 		return "create-comment";
 	}
 	
@@ -52,5 +52,9 @@ public class BugController {
 	public String handleCreateProduct(HttpSession session, String name, String version, Account manager, Set<Account> qa, Set<Account> developers, Model model) {
 		model.addAttribute("create-product", bugTrackerService.createProductCategory(name, version, manager, qa, developers));
 		return "create-product";
+	}
+	
+	private Account getSessionAccount(HttpSession session) {
+		return (Account) session.getAttribute("account");
 	}
 }
