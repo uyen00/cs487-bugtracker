@@ -114,6 +114,12 @@ INSERT INTO Resolution (resolution) VALUES ('NOT A BUG');
 INSERT INTO Resolution (resolution) VALUES ('USER BRAIN DAMAGE');
 INSERT INTO Resolution (resolution) VALUES ('NEED MORE INFORMATION');
 
+INSERT INTO State (state) VALUES ('OPEN');
+INSERT INTO State (state) VALUES ('PENDING');
+INSERT INTO State (state) VALUES ('VERIFIED');
+INSERT INTO State (state) VALUES ('CLOSED');
+
+INSERT INTO Products()
 INSERT INTO AccountEntitlement
 	SELECT a.account_id, e.entitlement_id FROM Account a, Entitlement e
 	WHERE a.screen_name = 'test' AND e.entitlement_type = 'ADMIN';

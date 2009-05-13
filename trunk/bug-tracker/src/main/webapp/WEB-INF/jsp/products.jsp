@@ -6,11 +6,15 @@
 
 <jsp:include page="header.jsp" />
 <%
-	Set<ProductCategory> products = JspUtil.getAccount(request);
-	if (account != null) { 
-		if(account.isEntitledWIthAdmin()) {
+	Set<ProductCategory> products = JspUtil.getAttribute(request, "products", Set.class);
 %>
 	
 <b>Choose Product:</b>
-<% for (ProductCategory product :  %>
+<table>
+<% for (ProductCategory product : products) { %>
+	<tr><td><a href="bugs.html?productId=<%=product.getProductCategoryId() %>">
+		<%= product.getName() + "[" + product.getVersion() + "]" %>
+	</a></td></tr>
+<% } %>
+</table>
 <jsp:include page="footer.jsp" />
