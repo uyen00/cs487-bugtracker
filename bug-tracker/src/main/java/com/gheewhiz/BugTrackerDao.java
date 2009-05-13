@@ -14,7 +14,7 @@ public interface BugTrackerDao {
 
 	public void updateAccount(Account account);
 	
-	public void createBug(Bug bug);
+	public Bug createBug(Bug bug);
 	
 	public void updateBug(Bug bug);
 	

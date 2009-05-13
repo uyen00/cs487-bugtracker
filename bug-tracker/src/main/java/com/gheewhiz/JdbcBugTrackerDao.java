@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public class JdbcBugTrackerDao implements BugTrackerDao {
-	public void createBug(Bug bug) {
+	public Bug createBug(Bug bug) {
 		final Bug dbBug = new Bug();
 		dbBug.setState(bug.getState());
 		dbBug.setProductId(bug.getProductId());
@@ -47,6 +47,7 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 		}, keyHolder);
 		Integer bugId = keyHolder.getKey().intValue();
 		dbBug.setBugId(bugId);
+		return dbBug;
 	}
 
 	public Comment createComment(Comment comment) {
