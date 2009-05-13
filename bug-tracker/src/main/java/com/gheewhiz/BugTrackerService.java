@@ -44,4 +44,16 @@ public class BugTrackerService {
 	public Set<ProductCategory> getProducts() {
 		return bugTrackerDao.getAllProducts();
 	}
+	
+	public Set<Bug> getBugs(Integer productId) {
+		return bugTrackerDao.getBugs(productId);
+	}
+	
+	public Bug getBug(Integer bugID) {
+		return bugTrackerDao.getBug(bugID);
+	}
+		
+	public Bug createBug(Bug bug) {
+		return bugTrackerDao.createBug(bug);
+	}
 }

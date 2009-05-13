@@ -17,22 +17,25 @@ public class BugController {
 	}
 	
 	@RequestMapping(value = { "/bugs.html" })
-	public String handleBugs(HttpSession session, Model model) {
+	public String handleBugs(HttpSession session, Integer productId, Model model) {
+		model.addAttribute("bugs", bugTrackerService.getBugs(productId));
 		return "bugs";
 	}
 	
 	@RequestMapping(value = { "/bug.html" })
-	public String handleBug(HttpSession session, Model model) {
+	public String handleBug(HttpSession session, Integer bugId, Model model) {
+		model.addAttribute("bugs", bugTrackerService.getBug(bugId));
 		return "bug";
 	}
 	
 	@RequestMapping(value = { "/create-bug.html" })
-	public String handleCreateBug(HttpSession session, Model model) {
+	public String handleCreateBug(HttpSession session, Bug bug, Model model) {
+		model.addAttribute("create-bug", bugTrackerService.createBug(bug));
 		return "create-bug";
 	}
 	
 	@RequestMapping(value = { "/create-comment.html" })
-	public String handleCreateComment(HttpSession session, Model model) {
+	public String handleCreateComment(HttpSession session, Integer bugId, Model model) {
 		return "create-comment";
 	}
 	
