@@ -40,4 +40,8 @@ public class BugTrackerService {
 	public void updateAccount(Account account) {
 		bugTrackerDao.updateAccount(account);
 	}
+	
+	public Set<ProductCategory> getProducts() {
+		return bugTrackerDao.getAllProducts();
+	}
 }
