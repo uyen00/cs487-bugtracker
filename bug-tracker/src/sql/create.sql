@@ -105,6 +105,7 @@ INSERT INTO Entitlement (entitlement_type) VALUES ('ADMIN');
 
 INSERT INTO Account (screen_name, password) VALUES ('test', 'password');
 
+INSERT INTO Resolution (resolution) VALUES ('IN PROGRESS');
 INSERT INTO Resolution (resolution) VALUES ('FIXED');
 INSERT INTO Resolution (resolution) VALUES ('DEFER');
 INSERT INTO Resolution (resolution) VALUES ('DUP');
@@ -119,7 +120,13 @@ INSERT INTO State (state) VALUES ('PENDING');
 INSERT INTO State (state) VALUES ('VERIFIED');
 INSERT INTO State (state) VALUES ('CLOSED');
 
-INSERT INTO Products()
+INSERT INTO Product (name, version, manager_id) VALUES ('Some Project', '1.0', 1);
+INSERT INTO Product (name, version, manager_id) VALUES ('Another Project', '2.0-beta', 1);
+    
+INSERT INTO Bug (product_id, resolution, state, open_date, steps, shortdesc) 
+	VALUES (1, 'IN PROGRESS', 'OPEN', CURRENT_TIMESTAMP, 'Do this', 'Stupid bug');
+	
+
 INSERT INTO AccountEntitlement
 	SELECT a.account_id, e.entitlement_id FROM Account a, Entitlement e
 	WHERE a.screen_name = 'test' AND e.entitlement_type = 'ADMIN';
