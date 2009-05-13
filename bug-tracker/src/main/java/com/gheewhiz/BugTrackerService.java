@@ -25,8 +25,8 @@ public class BugTrackerService {
 		return bugTrackerDao.getAccount(accountId);
 	}
 
-	public void createAccount(String screenName, Integer memberId,
-			String password, String memberType, Set<Entitlement> entitlements) {
+	public void createAccount(String screenName,
+			String password, Set<Entitlement> entitlements) {
 		Account account = bugTrackerDao.getAccountByScreenName(screenName);
 		if (account == null) {
 			account = new Account();
@@ -41,10 +41,6 @@ public class BugTrackerService {
 		bugTrackerDao.updateAccount(account);
 	}
 	
-	public Set<ProductCategory> getProducts() {
-		return bugTrackerDao.getAllProducts();
-	}
-	
 	public Set<Bug> getBugs(Integer productId) {
 		return bugTrackerDao.getBugs(productId);
 	}
@@ -53,7 +49,39 @@ public class BugTrackerService {
 		return bugTrackerDao.getBug(bugID);
 	}
 		
-	public Bug createBug(Bug bug) {
+	public Bug createBug(Integer productId, String state, String resolution, java.util.Date opened, String shortdesc, String steps, Set<Comment> comments) {
+		Bug bug = new Bug();
+		bug.setProductId(productId);
+		bug.setState(state);
+		bug.setResolution(resolution);
+		bug.setOpened(opened);
+		bug.setShortdesc(shortdesc);
+		bug.setSteps(steps);
+		bug.setComments(comments);
 		return bugTrackerDao.createBug(bug);
 	}
+	
+	public Comment createComment(String com, Integer bugId, Account commenter) {
+		Comment comment = new Comment();
+		comment.setComment(com);
+		comment.setBugId(bugId);
+		comment.setCommenter(commenter);		
+		return bugTrackerDao.createComment(comment);
+	}
+	
+	public Set<ProductCategory> getProducts() {
+		return bugTrackerDao.getAllProducts();
+	}
+	
+	public ProductCategory createProductCategory(String name, String version, Account manager, Set<Account> qa, Set<Account> developers) {
+		ProductCategory pc = new ProductCategory();
+		pc.setName(name);
+		pc.setVersion(version);
+		pc.setManager(manager);
+		pc.setQA(qa);
+		pc.setDevelopers(developers);
+		return bugTrackerDao.createProductCategory(pc);
+	}
+	
+	
 }
