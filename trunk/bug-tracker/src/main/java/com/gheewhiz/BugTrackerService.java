@@ -78,13 +78,11 @@ public class BugTrackerService {
 		return bugTrackerDao.getAllProducts();
 	}
 	
-	public ProductCategory createProductCategory(String name, String version, Account manager, Set<Account> qa, Set<Account> developers) {
+	public ProductCategory createProductCategory(String name, String version, Integer managerID) {
 		ProductCategory pc = new ProductCategory();
 		pc.setName(name);
 		pc.setVersion(version);
-		pc.setManager(manager);
-		pc.setQA(qa);
-		pc.setDevelopers(developers);
+		pc.setManager(getAccountById(managerID));
 		return bugTrackerDao.createProductCategory(pc);
 	}
 	
