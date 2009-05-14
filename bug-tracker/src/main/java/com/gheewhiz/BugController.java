@@ -62,7 +62,7 @@ public class BugController {
 			@RequestParam("bugId") Integer bugId, Model model) {
 		bugTrackerService.createComment(
 				comment, bugId, getSessionAccount(session));
-		model.addAttribute("bug", bugTrackerService.getBug(bugID));
+		model.addAttribute("bug", bugTrackerService.getBug(bugId));
 		return "bug";
 	}
 
