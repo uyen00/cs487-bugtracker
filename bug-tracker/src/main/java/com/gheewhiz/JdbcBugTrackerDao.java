@@ -204,6 +204,37 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 				new Object[] { product.getManager().getAccountId(), product.getName(),
 						product.getVersion(), product.getProductCategoryId() });
 	}
+	
+	public void addQAToProduct(Integer productId, Integer accountId) {
+		addAccountToProduct(productId, accountId, Entitlement.QA);
+	}
+	
+	public void addDeveloperToProduct(Integer productId, Integer accountId) {
+		addAccountToProduct(productId, accountId, Entitlement.DEVELOPER);
+	}
+	
+	private void addAccountToProduct(final Integer productId, 
+			final Integer accountId, final Entitlement entitlement) {
+		
+		jdbcTemplate.update(new PreparedStatementCreator() {
+			public PreparedStatement createPreparedStatement(Connection con)
+					throws SQLException {
+				String query = null;
+				if(Entitlement.QA.equals(entitlement)) {
+					query = "insert into ProductQA (product_id, account_id) VALUE (?, ?)";
+				} else if (Entitlement.DEVELOPER.equals(entitlement)) {
+					query = "insert into ProductDevlopers (product_id, account_id) VALUE (?, ?)";
+				} else {
+					throw new IllegalArgumentException
+						("You can only add developers and QA to a product");
+				}
+				PreparedStatement ps = con.prepareStatement(query);
+				ps.setInt(1, productId);
+				ps.setInt(2, accountId);
+				return ps;
+			}
+		});
+	}
 
 	public Set<Comment> getComments(Integer bugId) {
 		final Set<Comment> comments = new HashSet<Comment>();
