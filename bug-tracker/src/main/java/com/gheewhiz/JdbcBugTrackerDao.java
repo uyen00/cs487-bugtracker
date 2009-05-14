@@ -207,7 +207,7 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 
 	public Set<Comment> getComments(Integer bugId) {
 		final Set<Comment> comments = new HashSet<Comment>();
-		jdbcTemplate.query("select * from Comment where bud_id = ?", new Object[] { bugId }, 
+		jdbcTemplate.query("select * from Comment where bug_id = ?", new Object[] { bugId }, 
 				new RowCallbackHandler() {
 					public void processRow(ResultSet rs) throws SQLException {
 						Comment comment = new Comment();
