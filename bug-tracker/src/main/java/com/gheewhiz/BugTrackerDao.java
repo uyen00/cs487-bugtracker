@@ -10,6 +10,8 @@ public interface BugTrackerDao {
 
 	public Account getAccountByScreenName(String screenName);
 	
+	public Set<Account> getAccountsByEntitlement(Entitlement entitlement);
+	
 	public void removeAccount(Account account);
 
 	public void updateAccount(Account account);

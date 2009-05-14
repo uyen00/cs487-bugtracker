@@ -88,5 +88,15 @@ public class BugTrackerService {
 		return bugTrackerDao.createProductCategory(pc);
 	}
 	
+	public Set<Account> getManagerAccounts(){
+		return bugTrackerDao.getAccountsByEntitlement(Entitlement.MANAGER);
+	}
 	
+	public Set<Account> getQAAccounts(){
+		return bugTrackerDao.getAccountsByEntitlement(Entitlement.QA);
+	}
+	
+	public Set<Account> getDeveloperAccounts(){
+		return bugTrackerDao.getAccountsByEntitlement(Entitlement.DEVELOPER);
+	}
 }

@@ -66,11 +66,10 @@ public class BugController {
 	public String handleCreateProduct(HttpSession session,
 			@RequestParam("name") String name,
 			@RequestParam("version") String version,
-			@RequestParam("manager") Account manager,
-			@RequestParam("qa") Set<Account> qa,
-			@RequestParam("developers") Set<Account> developers, Model model) {
-		model.addAttribute("create-product", bugTrackerService
-				.createProductCategory(name, version, manager, qa, developers));
+			@RequestParam("managerId") Integer managerId,
+			Model model) {
+		//model.addAttribute("create-product", bugTrackerService
+				//.createProductCategory(name, version, manager, qa, developers));
 		return "create-product";
 	}
 
