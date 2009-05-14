@@ -89,10 +89,10 @@ public class BugTrackerDaoTest extends
         }
         
         
-        private getCommentById(Set<Comment> comments, Integer commentId) {
+        private Comment getCommentById(Set<Comment> comments, Integer commentId) {
             for(Comment comment : comments) {
                 if(commentId.equals(comment.getCommentId())) {
-                    return comments;
+                    return comment;
                 }
             }
             return null;
