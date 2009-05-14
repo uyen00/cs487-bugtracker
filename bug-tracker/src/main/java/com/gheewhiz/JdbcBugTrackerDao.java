@@ -56,6 +56,7 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 		dbComment.setComment(comment.getComment());
 		dbComment.setCommenter(comment.getCommenter());
 		KeyHolder keyHolder = new GeneratedKeyHolder();
+
 		jdbcTemplate.update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection con)
 					throws SQLException {
@@ -85,7 +86,7 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 					throws SQLException {
 				PreparedStatement ps = con
 						.prepareStatement(
-								"insert into Comment (manager_id, version, name) values (?, ?, ?)",
+								"insert into Product (manager_id, version, name) values (?, ?, ?)",
 								Statement.RETURN_GENERATED_KEYS);
 				ps.setInt(1, dbProduct.getManager().getAccountId());
 				ps.setString(2, dbProduct.getVersion());
@@ -185,7 +186,7 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 
 	public void updateComment(Comment comment) {
 		jdbcTemplate.update(
-				"update Comment set bug_id = ?, comment = ?, account_id = ? where comment_id = ?",
+				"update Comment set bug_id = ?, comment = ?, commenter_id = ? where comment_id = ?",
 				new Object[] { comment.getBugId(), comment.getComment(),
 						comment.getCommenter().getAccountId(), comment.getCommentId() });
 	}
