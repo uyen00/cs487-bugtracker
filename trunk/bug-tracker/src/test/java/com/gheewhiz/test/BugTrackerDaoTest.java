@@ -1,12 +1,16 @@
 package com.gheewhiz.test;
 
 import java.util.Collections;
+import java.util.Date;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
+import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.gheewhiz.Account;
@@ -15,12 +19,6 @@ import com.gheewhiz.BugTrackerDao;
 import com.gheewhiz.Comment;
 import com.gheewhiz.Entitlement;
 import com.gheewhiz.ProductCategory;
-import java.util.Date;
-import org.springframework.transaction.annotation.Transactional;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.BeforeTest;
 
 @ContextConfiguration(locations = { "/bug-tracker-datasource.xml",
 		"/bug-tracker-app-context.xml" })
