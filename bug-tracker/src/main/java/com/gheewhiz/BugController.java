@@ -55,7 +55,14 @@ public class BugController {
 		 
 		return "bug";
 	}
-
+    
+	@RequestMapping(value = { "/create-comment.html" }, method = RequestMethod.GET)
+	public String handleCreateComment(HttpSession session,
+			@RequestParam("bugId") Integer bugId, Model model) {
+		model.addAttribute("product",bugTrackerService.getBug(bugId));
+		return "create-bug";
+	}
+	
 	@RequestMapping(value = { "/create-comment.html" }, method = RequestMethod.POST)
 	public String handleCreateComment(HttpSession session,
 			@RequestParam("comment") String comment,
