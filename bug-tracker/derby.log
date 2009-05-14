@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-2009-05-14 22:42:26.731 GMT:
- Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance a816c00e-0121-414a-71a7-000003544d10
+2009-05-14 23:05:18.796 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance a816c00e-0121-415f-6128-000003657f18
 on database directory /home/sergio/NetBeansProjects/bug-tracker/bug-tracker  
 
 Database Class Loader started - derby.database.classpath=''

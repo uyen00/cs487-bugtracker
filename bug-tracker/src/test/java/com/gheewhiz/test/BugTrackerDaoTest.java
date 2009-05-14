@@ -116,7 +116,11 @@ public class BugTrackerDaoTest extends
         }
         
         public Account accountManagerStub() {
-            	Account account = new Account();
+                Account account = bugTrackerDao.getAccountByScreenName("BigBoss");
+                if(account != null) {
+                    return account;
+                }
+            	account = new Account();
 		account.setPassword("123");
 		account.setScreenName("BigBoss");
                 account.setEntitlements(Collections.singleton(Entitlement.MANAGER));
