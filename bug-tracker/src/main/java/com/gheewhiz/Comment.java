@@ -1,6 +1,6 @@
 package com.gheewhiz;
 
-public class Comment {
+public class Comment implements Comparable<Comment> {
 	private Integer commentId;
 	private String comment;
 	private Integer bugId;
@@ -36,5 +36,14 @@ public class Comment {
 
 	public void setBugId(Integer bugId) {
 		this.bugId = bugId;
+	}
+	
+	public int compareTo(Comment o) {
+		if(this.getBugId()<o.getBugId())
+			return 1;
+		else if(this.getBugId()==o.getBugId())
+			return 0;
+		else
+		    return -1;
 	}
 }

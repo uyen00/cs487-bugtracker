@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -141,7 +142,7 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 	}
 
 	public Set<Bug> getBugs(Integer productId) {
-		final Set<Bug> bugs = new HashSet<Bug>();
+		final Set<Bug> bugs = new TreeSet<Bug>();
 		jdbcTemplate.query("select * from bug where product_id = ?",
 				new Object[] { productId }, new RowCallbackHandler() {
 					public void processRow(ResultSet rs) throws SQLException {
@@ -237,7 +238,7 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 	}
 
 	public Set<Comment> getComments(Integer bugId) {
-		final Set<Comment> comments = new HashSet<Comment>();
+		final Set<Comment> comments = new TreeSet<Comment>();
 		jdbcTemplate.query("select * from Comment where bug_id = ?", new Object[] { bugId }, 
 				new RowCallbackHandler() {
 					public void processRow(ResultSet rs) throws SQLException {
@@ -343,7 +344,7 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 	}
 	
 	public Set<Account> getAccountsByEntitlement(Entitlement entitlement) {
-		final Set<Account> accounts = new HashSet<Account>();
+		final Set<Account> accounts = new TreeSet<Account>();
 		jdbcTemplate.query(
 				"select * from account where account_id in (select account_id from AccountEntitlements " +
 				"where entitlement_id = (select entitlement_id from Entitlement where entitlement_type = ?))",
@@ -364,7 +365,7 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 	
 	private Set<Account> getAccountsForProduct(Entitlement entitlement, Integer productId) {
 		String query = null;
-		final Set<Account> accounts = new HashSet<Account>();
+		final Set<Account> accounts = new TreeSet<Account>();
 		if(Entitlement.DEVELOPER.equals(entitlement)) {
 			query = "select * from account where account_id in " +
 					"(select account_id from ProductDevelop where product_id = ?))";
@@ -406,7 +407,7 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 	}
 
 	private Set<Entitlement> getAccountEntitlements(int accountId) {
-		final Set<Entitlement> entitlements = new HashSet<Entitlement>();
+		final Set<Entitlement> entitlements = new TreeSet<Entitlement>();
 		jdbcTemplate
 				.query(
 						"select * from Entitlement where entitlement_id in "
