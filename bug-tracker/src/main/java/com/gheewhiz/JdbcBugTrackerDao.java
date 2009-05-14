@@ -108,7 +108,10 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 						product.setVersion(rs.getString("version"));
 						product.setProductCategoryId(rs.getInt("product_id"));
 						product.setName(rs.getString("name"));
-						//TODO: NEED TO GET DEVELOPERS AND QA
+						product.setDevelopers(getAccountsForProduct(Entitlement.DEVELOPER, 
+								product.getProductCategoryId()));
+						product.setQA(getAccountsForProduct(Entitlement.QA, 
+								product.getProductCategoryId()));
 						products.add(product);
 					}
 				});
@@ -150,6 +153,7 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 					    bug.setOpened(rs.getDate("open_date"));
 					    bug.setSteps(rs.getString("steps"));
 					    bug.setShortdesc(rs.getString("shortdesc"));
+					    bug.setComments(getComments(bug.getBugId()));
 					    bugs.add(bug);
 					}
 				});
@@ -165,7 +169,10 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 						product.setVersion(rs.getString("version"));
 						product.setProductCategoryId(rs.getInt("product_id"));
 						product.setName(rs.getString("name"));
-						//TODO: NEED TO GET DEVELOPERS AND QA
+						product.setDevelopers(getAccountsForProduct(Entitlement.DEVELOPER, 
+								product.getProductCategoryId()));
+						product.setQA(getAccountsForProduct(Entitlement.QA, 
+								product.getProductCategoryId()));
 					}
 				});
 		if (productId.equals(product.getProductCategoryId())) {
@@ -323,6 +330,34 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 				});
 		return accounts;
 	}
+	
+	private Set<Account> getAccountsForProduct(Entitlement entitlement, Integer productId) {
+		String query = null;
+		final Set<Account> accounts = new HashSet<Account>();
+		if(Entitlement.DEVELOPER.equals(entitlement)) {
+			query = "select * from account where account_id in " +
+					"(select account_id from ProductDevelop where product_id = ?))";
+		} else if (Entitlement.QA.equals(entitlement)) {
+			query = "select * from account where account_id in " +
+				"(select account_id from ProductQA where product_id = ?))";
+		} else {
+			return accounts;
+		}
+		
+		jdbcTemplate.query(
+				query, new Object[] { productId }, new RowCallbackHandler() {
+					public void processRow(ResultSet rs) throws SQLException {
+						Account account = new Account();
+						Integer accountId = rs.getInt("account_id");
+						account.setAccountId(accountId);
+						account.setPassword(rs.getString("password"));
+						account.setEntitlements(getAccountEntitlements(accountId));
+						account.setScreenName(rs.getString("screen_name"));
+						accounts.add(account);
+					}
+				});
+		return accounts;
+	} 
 
 	private void updateAccountEntitlements(int account_id,
 			Set<Entitlement> entitlements) {
