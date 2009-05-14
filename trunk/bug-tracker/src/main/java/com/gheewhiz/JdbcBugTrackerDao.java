@@ -244,7 +244,7 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 						Comment comment = new Comment();
 						comment.setBugId(rs.getInt("bug_id"));
 						comment.setComment(rs.getString("comment"));
-						comment.setCommenter(getAccount(rs.getInt("account_id")));
+						comment.setCommenter(getAccount(rs.getInt("commenter_id")));
 						comment.setCommentId(rs.getInt("comment_id"));
 						comments.add(comment);
 					}
