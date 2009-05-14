@@ -200,7 +200,7 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 	public void updateProductCategory(ProductCategory product) {
 		jdbcTemplate
 		.update(
-				"update Product set manager_id = ?, name = ?, version = ? where account_id = ?",
+				"update Product set manager_id = ?, name = ?, version = ? where product_id = ?",
 				new Object[] { product.getManager().getAccountId(), product.getName(),
 						product.getVersion(), product.getProductCategoryId() });
 	}
