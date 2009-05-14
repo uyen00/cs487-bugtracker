@@ -161,7 +161,6 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 		jdbcTemplate.query("select * from Product where product_id = ?",
 				new Object[] { productId }, new RowCallbackHandler() {
 					public void processRow(ResultSet rs) throws SQLException {
-						ProductCategory product = new ProductCategory();
 						product.setManager(getAccount(rs.getInt("manager_id")));
 						product.setVersion(rs.getString("version"));
 						product.setProductCategoryId(rs.getInt("product_id"));
