@@ -82,8 +82,7 @@ public class BugTrackerDaoTest extends
             comment.setComment("comment test2");
             bugTrackerDao.updateComment(comment);
             dbComment = getCommentById(bugTrackerDao.getComments(bugStub.getBugId()), dbComment.getCommentId());
-            //dbComment = bugTrackerDao.getComments(commentID);
-            //assert dbComment.getComment().equals("comment test2");
+            assert dbComment.getComment().equals("comment test2");
         }
         
         
