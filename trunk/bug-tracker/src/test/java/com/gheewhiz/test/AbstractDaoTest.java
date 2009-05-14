@@ -2,7 +2,6 @@ package com.gheewhiz.test;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.testng.annotations.BeforeClass;
 
 import com.gheewhiz.BugTrackerDao;
 
@@ -17,9 +16,8 @@ public class AbstractDaoTest {
 	public BugTrackerDao getBugTrackerDao() {
 		return bugTrackerDao;
 	}
-	
-	@BeforeClass(alwaysRun = true)
-	public void init() {
+
+	protected void init() {
 		ApplicationContext context = new ClassPathXmlApplicationContext(
 				new String[] { "classpath:bug-tracker-datasource.xml",
 						"classpath:bug-tracker-app-context.xml" });
