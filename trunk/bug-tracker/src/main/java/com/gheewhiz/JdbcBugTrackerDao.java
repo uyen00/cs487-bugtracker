@@ -304,6 +304,26 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 		updateAccountEntitlements(account.getAccountId(), account
 				.getEntitlements());
 	}
+	
+	public Set<Account> getAccountsByEntitlement(Entitlement entitlement) {
+		final Set<Account> accounts = new HashSet<Account>();
+		jdbcTemplate.query(
+				"select * from account where account_id in (select account_id from AccountEntitlements " +
+				"where entitlement_id = (select entitlement_id from Entitlement where entitlement_type = ?))",
+				new Object[] { entitlement }, new RowCallbackHandler() {
+					public void processRow(ResultSet rs) throws SQLException {
+						Account account = new Account();
+						Integer accountId = rs.getInt("account_id");
+						account.setAccountId(accountId);
+						account.setPassword(rs.getString("password"));
+						account
+								.setEntitlements(getAccountEntitlements(accountId));
+						account.setScreenName(rs.getString("screen_name"));
+						accounts.add(account);
+					}
+				});
+		return accounts;
+	}
 
 	private void updateAccountEntitlements(int account_id,
 			Set<Entitlement> entitlements) {
