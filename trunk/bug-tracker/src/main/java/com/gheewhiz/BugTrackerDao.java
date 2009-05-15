@@ -11,7 +11,9 @@ public interface BugTrackerDao {
 	public Account getAccountByScreenName(String screenName);
 
 	public Set<Account> getAccountsByEntitlement(Entitlement entitlement);
-
+	
+	public List<Integer> getAccountIdsByEntitlement(Entitlement entitlement);
+	
 	public void removeAccount(Account account);
 
 	public void updateAccount(Account account);
@@ -33,6 +35,8 @@ public interface BugTrackerDao {
 	public ProductCategory getProductCategory(Integer productId);
 
 	public Set<ProductCategory> getAllProducts();
+	
+	public List<Integer> getProductIds();
 
 	public Set<Bug> getBugs(Integer productId);
 

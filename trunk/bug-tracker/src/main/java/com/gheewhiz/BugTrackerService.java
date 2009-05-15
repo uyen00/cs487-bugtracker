@@ -82,6 +82,10 @@ public class BugTrackerService {
 		return bugTrackerDao.getAllProducts();
 	}
 	
+	public List<Integer> getProductsIds() {
+		return bugTrackerDao.getProductIds();
+	}
+	
 	public ProductCategory createProductCategory(String name, String version, Integer managerID) {
 		ProductCategory pc = new ProductCategory();
 		pc.setName(name);
@@ -90,16 +94,36 @@ public class BugTrackerService {
 		return bugTrackerDao.createProductCategory(pc);
 	}
 	
+	public void addDevProd(Integer productId, Integer accountId){
+		bugTrackerDao.addDeveloperToProduct(productId, accountId);
+	}
+	
+	public void addQAProd(Integer productId, Integer accountId){
+		bugTrackerDao.addQAToProduct(productId, accountId);
+	}
+	
 	public Set<Account> getManagerAccounts(){
 		return bugTrackerDao.getAccountsByEntitlement(Entitlement.MANAGER);
+	}
+	
+	public List<Integer> getManagerAccountsIds(){
+		return bugTrackerDao.getAccountIdsByEntitlement(Entitlement.MANAGER);
 	}
 	
 	public Set<Account> getQAAccounts(){
 		return bugTrackerDao.getAccountsByEntitlement(Entitlement.QA);
 	}
 	
+	public List<Integer> getQAAccountsIds(){
+		return bugTrackerDao.getAccountIdsByEntitlement(Entitlement.QA);
+	}
+	
 	public Set<Account> getDeveloperAccounts(){
 		return bugTrackerDao.getAccountsByEntitlement(Entitlement.DEVELOPER);
+	}
+	
+	public List<Integer> getDeveloperAccountsIds(){
+		return bugTrackerDao.getAccountIdsByEntitlement(Entitlement.DEVELOPER);
 	}
 	
 	public List<String> getAllResolutions() {

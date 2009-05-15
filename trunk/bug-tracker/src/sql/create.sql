@@ -106,6 +106,7 @@ INSERT INTO Entitlement (entitlement_type) VALUES ('ADMIN');
 INSERT INTO Account (screen_name, password) VALUES ('test', 'password');
 INSERT INTO Account (screen_name, password) VALUES ('Jon', 'password');
 INSERT INTO Account (screen_name, password) VALUES ('Jacob', 'password');
+INSERT INTO Account (screen_name, password) VALUES ('Juan', 'password');
 
 INSERT INTO Resolution (resolution) VALUES ('IN PROGRESS');
 INSERT INTO Resolution (resolution) VALUES ('FIXED');
@@ -135,3 +136,15 @@ INSERT INTO Comment (bug_id, comment, commenter_id) VALUES (1, 'No its a fact', 
 INSERT INTO AccountEntitlement
 	SELECT a.account_id, e.entitlement_id FROM Account a, Entitlement e
 	WHERE a.screen_name = 'test' AND e.entitlement_type = 'ADMIN';
+
+INSERT INTO AccountEntitlement
+	SELECT a.account_id, e.entitlement_id FROM Account a, Entitlement e
+	WHERE a.screen_name = 'Jon' AND e.entitlement_type = 'MANAGER';
+
+INSERT INTO AccountEntitlement
+	SELECT a.account_id, e.entitlement_id FROM Account a, Entitlement e
+	WHERE a.screen_name = 'Jacob' AND e.entitlement_type = 'DEVELOPER';
+
+INSERT INTO AccountEntitlement
+	SELECT a.account_id, e.entitlement_id FROM Account a, Entitlement e
+	WHERE a.screen_name = 'Juan' AND e.entitlement_type = 'QA';
