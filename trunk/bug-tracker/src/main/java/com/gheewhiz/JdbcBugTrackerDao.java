@@ -160,6 +160,26 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 				});
 		return bugs;
 	}
+	
+	public Set<Bug> getOpenBugs() {
+		final Set<Bug> bugs = new TreeSet<Bug>();
+		jdbcTemplate.query("select * from bug where state = 'OPEN' order by product_id, bug_id asc",
+				new RowCallbackHandler() {
+					public void processRow(ResultSet rs) throws SQLException {
+						Bug bug = new Bug();
+						bug.setBugId(rs.getInt("bug_id"));
+						bug.setState(rs.getString("state"));
+						bug.setProductId(rs.getInt("product_id"));
+						bug.setResolution(rs.getString("resolution"));
+					    bug.setOpened(rs.getDate("open_date"));
+					    bug.setSteps(rs.getString("steps"));
+					    bug.setShortdesc(rs.getString("shortdesc"));
+					    bug.setComments(getComments(bug.getBugId()));
+					    bugs.add(bug);
+					}
+				});
+		return bugs;
+	}
 
 	public ProductCategory getProductCategory(Integer productId) {
 		final ProductCategory product = new ProductCategory();

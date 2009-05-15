@@ -36,6 +36,8 @@ public interface BugTrackerDao {
 	
 	public Set<Bug> getBugs(Integer productId);
 	
+	public Set<Bug> getOpenBugs();
+	
 	public Set<Comment> getComments(Integer bugId);
 	
 	public void addQAToProduct(Integer productId, Integer accountId);

@@ -90,6 +90,12 @@ public class BugController {
 		model.addAttribute("products", bugTrackerService.getProducts());
 		return "products";
 	}
+	
+	@RequestMapping(value = { "/list-bugs.html"})
+	public String handleOpenBugs(HttpSession session, Model model) {
+		model.addAttribute("list-bugs", bugTrackerService.getOpenBugs());
+		return "list-bugs";
+	}
 
 	private Account getSessionAccount(HttpSession session) {
 		return (Account) session.getAttribute("account");
