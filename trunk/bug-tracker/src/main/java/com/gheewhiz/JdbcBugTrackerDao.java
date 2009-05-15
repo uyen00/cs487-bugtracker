@@ -6,7 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -388,10 +391,10 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 		final Set<Account> accounts = new TreeSet<Account>();
 		if(Entitlement.DEVELOPER.equals(entitlement)) {
 			query = "select * from account where account_id in " +
-					"(select account_id from ProductDevelop where product_id = ?))";
+					"(select account_id from ProductDevelopers where product_id = ?)";
 		} else if (Entitlement.QA.equals(entitlement)) {
 			query = "select * from account where account_id in " +
-				"(select account_id from ProductQA where product_id = ?))";
+				"(select account_id from ProductQA where product_id = ?)";
 		} else {
 			return accounts;
 		}
@@ -444,5 +447,29 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 							}
 						});
 		return entitlements;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<String> getAllResolutions() {
+		List l = jdbcTemplate.queryForList("select resolution from Resolution");
+		List<String> resolutions = new ArrayList<String>();
+		for(Object o : l) {
+			Map<String, String> data = (Map<String, String>)o;
+			String s = data.get("RESOLUTION");
+			resolutions.add(s);
+		}
+		return resolutions;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<String>  getAllStates() {
+		List l = jdbcTemplate.queryForList("select state from State");
+		List<String> states = new ArrayList<String>();
+		for(Object o : l) {
+			Map<String, String> data = (Map<String, String>)o;
+			String s = data.get("STATE");
+			states.add(s);
+		}
+		return states;
 	}
 }

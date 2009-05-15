@@ -104,6 +104,8 @@ INSERT INTO Entitlement (entitlement_type) VALUES ('QA');
 INSERT INTO Entitlement (entitlement_type) VALUES ('ADMIN');
 
 INSERT INTO Account (screen_name, password) VALUES ('test', 'password');
+INSERT INTO Account (screen_name, password) VALUES ('Jon', 'password');
+INSERT INTO Account (screen_name, password) VALUES ('Jacob', 'password');
 
 INSERT INTO Resolution (resolution) VALUES ('IN PROGRESS');
 INSERT INTO Resolution (resolution) VALUES ('FIXED');
@@ -126,6 +128,9 @@ INSERT INTO Product (name, version, manager_id) VALUES ('Another Project', '2.0-
 INSERT INTO Bug (product_id, resolution, state, open_date, steps, shortdesc) 
 	VALUES (1, 'IN PROGRESS', 'OPEN', CURRENT_TIMESTAMP, 'Do this', 'Stupid bug');
 	
+INSERT INTO Comment (bug_id, comment, commenter_id) VALUES (1, 'This bug stinks', 1);
+INSERT INTO Comment (bug_id, comment, commenter_id) VALUES (1, 'Your opinion', 2);
+INSERT INTO Comment (bug_id, comment, commenter_id) VALUES (1, 'No its a fact', 1);
 
 INSERT INTO AccountEntitlement
 	SELECT a.account_id, e.entitlement_id FROM Account a, Entitlement e

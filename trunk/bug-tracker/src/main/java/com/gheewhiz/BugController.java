@@ -39,6 +39,8 @@ public class BugController {
 	public String handleCreateBug(HttpSession session,
 			@RequestParam("productId") Integer productId, Model model) {
 		model.addAttribute("product",bugTrackerService.getProduct(productId));
+		model.addAttribute("states",bugTrackerService.getAllStates());
+		model.addAttribute("resolutions",bugTrackerService.getAllResolutions());
 		return "create-bug";
 	}
 
@@ -48,10 +50,9 @@ public class BugController {
 			@RequestParam("state") String state,
 			@RequestParam("resolution") String resolution,
 			@RequestParam("shortdesc") String shortdesc,
-			@RequestParam("steps") String steps,
-			@RequestParam("comments") Set<Comment> comments, Model model) {
+			@RequestParam("steps") String steps, Model model) {
 		model.addAttribute("bug", bugTrackerService.createBug(productId,
-					state, resolution, shortdesc, steps, comments));
+					state, resolution, shortdesc, steps));
 		 
 		return "bug";
 	}

@@ -1,6 +1,6 @@
 package com.gheewhiz;
 
-public class Entitlement {
+public class Entitlement implements Comparable<Entitlement> {
 	private Integer entitlementId;
 	private String type;
 	public static Entitlement MANAGER = new Entitlement("MANAGER");
@@ -44,5 +44,9 @@ public class Entitlement {
 			return true;
 		}
 		return super.equals(obj);
+	}
+	
+	public int compareTo(Entitlement o) {
+		return equals(o) ? 0 : 1;
 	}
 }
