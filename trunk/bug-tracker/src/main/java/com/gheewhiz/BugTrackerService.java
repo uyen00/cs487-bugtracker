@@ -26,7 +26,7 @@ public class BugTrackerService {
 		return bugTrackerDao.getAccount(accountId);
 	}
 
-	public void createAccount(String screenName,
+	public Account createAccount(String screenName,
 			String password, Set<Entitlement> entitlements) {
 		Account account = bugTrackerDao.getAccountByScreenName(screenName);
 		if (account == null) {
@@ -34,8 +34,9 @@ public class BugTrackerService {
 			account.setScreenName(screenName);
 			account.setEntitlements(entitlements);
 			account.setPassword(password);
-			bugTrackerDao.createAccount(account);
+			return bugTrackerDao.createAccount(account);
 		}
+		return null;
 	}
 
 	public void updateAccount(Account account) {

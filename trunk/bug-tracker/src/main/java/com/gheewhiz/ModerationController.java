@@ -1,11 +1,14 @@
 package com.gheewhiz;
 
+import java.util.Collections;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -25,35 +28,30 @@ public class ModerationController {
 		return "moderate";
 	}
 
-	@RequestMapping("/useradmin.html")
+	@RequestMapping(value = "/useradmin.html", method = RequestMethod.GET)
 	public String handleUserAdmin(HttpSession session, Model model) {
 		if (!isAuthorized(session)) {
 			return "unauthorized";
 		}
-		// model.addAttribute("emailMap", wootubeService.getEmailMap());
-		// model.addAttribute("screenNameMap",
-		// wootubeService.getScreenNameMap());
 		return "useradmin";
 	}
 
-	@RequestMapping("/createaccount.html")
+	@RequestMapping(value = { "/useradmin.html" }, method = RequestMethod.POST)
 	public String handleCreateAccount(
-			@RequestParam("memberId") Integer memberId,
 			@RequestParam("screenName") String screenName,
-			@RequestParam("memberType") String memberType,
-			@RequestParam("password") String password, HttpSession session,
+			@RequestParam("password") String password, 
+			@RequestParam("entitlement") String entitlement,
+			HttpSession session,
 			Model model) {
 		if (!isAuthorized(session)) {
 			return "unauthorized";
 		}
-		bugTrackerService.createAccount(screenName, password,
-				null);
-		// model.addAttribute("emailMap", wootubeService.getEmailMap());
-		// model.addAttribute("screenNameMap",
-		// wootubeService.getScreenNameMap());
+		
+		model.addAttribute("newUser", bugTrackerService.createAccount(screenName, password, 
+				Collections.singleton(new Entitlement(entitlement.trim()))));
 		return "useradmin";
 	}
-
+	
 	public boolean isAuthorized(HttpSession session) {
 		return ((Account) session.getAttribute("account"))
 				.isEntitledWIthAdmin();
