@@ -10,13 +10,15 @@
 
 <table>
 	<tr>
-		<td>ID</td><td>State</td><td>Resolution</td><td>Opened</td>
+		<td>ID</td><td>State</td><td>Resolution</td><td>Opened</td><td>QA ID</td><td>Dev ID</td>
 	</tr>
 	<tr>
 		<td><%= bug.getBugId() %></td>
 		<td><%= bug.getState() %></td>
 		<td><%= bug.getResolution() %></td>
 		<td><%= bug.getOpened() %></td>
+		<td><%= bug.getQAId() %></td>
+		<td><%= bug.getDevId() %></td>
 	</tr>
 </table>
 
