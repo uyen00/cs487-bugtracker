@@ -3,7 +3,7 @@ package com.gheewhiz;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Bug {
+public class Bug implements Comparable<Bug> {
 
 	Integer bugId;
 	Integer productId;
@@ -88,4 +88,7 @@ public class Bug {
 		return steps;
 	}
 	
+	public int compareTo(Bug o) {
+		return this.getBugId().compareTo(o.getBugId());
+	}
 }

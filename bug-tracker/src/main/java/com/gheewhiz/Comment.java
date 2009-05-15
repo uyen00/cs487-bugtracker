@@ -39,9 +39,9 @@ public class Comment implements Comparable<Comment> {
 	}
 	
 	public int compareTo(Comment o) {
-		if(this.getBugId()<o.getBugId())
+		if(this.getCommentId()<o.getCommentId())
 			return 1;
-		else if(this.getBugId()==o.getBugId())
+		else if(this.getCommentId()==o.getCommentId())
 			return 0;
 		else
 		    return -1;

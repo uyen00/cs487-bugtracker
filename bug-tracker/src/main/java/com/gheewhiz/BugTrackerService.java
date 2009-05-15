@@ -1,5 +1,6 @@
 package com.gheewhiz;
 
+import java.util.List;
 import java.util.Set;
 
 public class BugTrackerService {
@@ -57,7 +58,7 @@ public class BugTrackerService {
 		return bugTrackerDao.getProductCategory(productId);
 	}
 	
-	public Bug createBug(Integer productId, String state, String resolution, String shortdesc, String steps, Set<Comment> comments) {
+	public Bug createBug(Integer productId, String state, String resolution, String shortdesc, String steps) {
 		Bug bug = new Bug();
 		bug.setProductId(productId);
 		bug.setState(state);
@@ -66,7 +67,6 @@ public class BugTrackerService {
 		bug.setOpened(opened);
 		bug.setShortdesc(shortdesc);
 		bug.setSteps(steps);
-		bug.setComments(comments);
 		return bugTrackerDao.createBug(bug);
 	}
 	
@@ -100,5 +100,13 @@ public class BugTrackerService {
 	
 	public Set<Account> getDeveloperAccounts(){
 		return bugTrackerDao.getAccountsByEntitlement(Entitlement.DEVELOPER);
+	}
+	
+	public List<String> getAllResolutions() {
+		return bugTrackerDao.getAllResolutions();
+	}
+	
+	public List<String> getAllStates() {
+		return bugTrackerDao.getAllStates();
 	}
 }
