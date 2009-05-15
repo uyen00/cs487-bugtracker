@@ -121,6 +121,18 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 				});
 		return products;
 	}
+	
+	public List<Integer> getProductIds() {
+		final List<Integer> products = new ArrayList<Integer>();
+		jdbcTemplate.query("select product_id from Product", new RowCallbackHandler() {
+					public void processRow(ResultSet rs) throws SQLException {
+						Integer inti;
+						inti = rs.getInt("product_id");
+						products.add(inti);
+					}
+				});
+		return products;
+	}
 
 	public Bug getBug(Integer bugId) {
 		final Bug bug = new Bug();
@@ -245,9 +257,10 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 					throws SQLException {
 				String query = null;
 				if(Entitlement.QA.equals(entitlement)) {
-					query = "insert into ProductQA (product_id, account_id) VALUE (?, ?)";
+					query = "insert into ProductQA (product_id, account_id) VALUES (?, ?)";
+					
 				} else if (Entitlement.DEVELOPER.equals(entitlement)) {
-					query = "insert into ProductDevlopers (product_id, account_id) VALUE (?, ?)";
+					query = "insert into ProductDevelopers (product_id, account_id) VALUES (?, ?)";
 				} else {
 					throw new IllegalArgumentException
 						("You can only add developers and QA to a product");
@@ -368,10 +381,11 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 	
 	public Set<Account> getAccountsByEntitlement(Entitlement entitlement) {
 		final Set<Account> accounts = new TreeSet<Account>();
+		String ename = entitlement.getType();
 		jdbcTemplate.query(
-				"select * from account where account_id in (select account_id from AccountEntitlements " +
+				"select * from account where account_id in (select account_id from AccountEntitlement " +
 				"where entitlement_id = (select entitlement_id from Entitlement where entitlement_type = ?))",
-				new Object[] { entitlement }, new RowCallbackHandler() {
+				new Object[] { ename }, new RowCallbackHandler() {
 					public void processRow(ResultSet rs) throws SQLException {
 						Account account = new Account();
 						Integer accountId = rs.getInt("account_id");
@@ -384,6 +398,24 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 					}
 				});
 		return accounts;
+	}
+	
+	public List<Integer> getAccountIdsByEntitlement(Entitlement entitlement) {
+		final List<Integer> ids = new ArrayList<Integer>();
+		String ename = entitlement.getType();
+		jdbcTemplate.query(
+				"select account_id from account where account_id in (select account_id from AccountEntitlement " +
+				"where entitlement_id = (select entitlement_id from Entitlement where entitlement_type = ?))",
+				new Object[] { ename }, new RowCallbackHandler() {
+					public void processRow(ResultSet rs) throws SQLException {
+						Integer inti;
+						Integer accountId = rs.getInt("account_id");
+						inti = accountId;
+						
+						ids.add(inti);
+					}
+				});
+		return ids;
 	}
 	
 	private Set<Account> getAccountsForProduct(Entitlement entitlement, Integer productId) {

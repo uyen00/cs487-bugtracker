@@ -80,7 +80,13 @@ public class BugController {
 		return "products";
 	}
 
-	@RequestMapping(value = { "/create-product.html" })
+	@RequestMapping(value = { "/create-product.html" }, method = RequestMethod.GET)
+	public String handleCreateProduct(HttpSession session, Model model) {
+		model.addAttribute("managerids",bugTrackerService.getManagerAccountsIds());
+		return "create-product";
+	}
+	
+	@RequestMapping(value = { "/create-product.html" }, method = RequestMethod.POST)
 	public String handleCreateProduct(HttpSession session,
 			@RequestParam("name") String name,
 			@RequestParam("version") String version,
@@ -88,6 +94,42 @@ public class BugController {
 			Model model) {
 		bugTrackerService
 			.createProductCategory(name, version, managerId);
+		model.addAttribute("products", bugTrackerService.getProducts());
+		return "products";
+	}
+	
+	@RequestMapping(value = { "/add-devprod.html" }, method = RequestMethod.GET)
+	public String handleAddProdDev(HttpSession session, Model model) {
+		model.addAttribute("productids",bugTrackerService.getProductsIds());
+		model.addAttribute("devids",bugTrackerService.getDeveloperAccountsIds());
+		return "add-devprod";
+	}
+	
+	@RequestMapping(value = { "/add-devprod.html" }, method = RequestMethod.POST)
+	public String handleAddProdDev(HttpSession session,
+			@RequestParam("productId") Integer productId,
+			@RequestParam("devId") Integer devId,
+			Model model) {
+		bugTrackerService
+			.addDevProd(productId, devId);
+		model.addAttribute("products", bugTrackerService.getProducts());
+		return "products";
+	}
+	
+	@RequestMapping(value = { "/add-qaprod.html" }, method = RequestMethod.GET)
+	public String handleAddProdQA(HttpSession session, Model model) {
+		model.addAttribute("productids",bugTrackerService.getProductsIds());
+		model.addAttribute("qaids",bugTrackerService.getQAAccountsIds());
+		return "add-qaprod";
+	}
+	
+	@RequestMapping(value = { "/add-qaprod.html" }, method = RequestMethod.POST)
+	public String handleAddProdQA(HttpSession session,
+			@RequestParam("productId") Integer productId,
+			@RequestParam("qaId") Integer qaId,
+			Model model) {
+		bugTrackerService
+			.addQAProd(productId, qaId);
 		model.addAttribute("products", bugTrackerService.getProducts());
 		return "products";
 	}
