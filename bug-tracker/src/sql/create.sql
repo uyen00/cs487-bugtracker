@@ -1,4 +1,7 @@
 DROP TABLE Comment;
+DROP TABLE BugQA;
+DROP TABLE BugDeveloper;
+DROP TABLE BugManager;
 DROP TABLE Bug;
 DROP TABLE ProductQA;
 DROP TABLE ProductDevelopers;
@@ -77,11 +80,30 @@ CREATE TABLE Bug (
     PRIMARY KEY(bug_id)
 );
 
+
 ALTER TABLE Bug ADD CONSTRAINT FK_Bug_Product
     FOREIGN KEY (product_id) REFERENCES Product(product_id);
 
 ALTER TABLE Bug ADD CONSTRAINT FK_Bug_Resolution
     FOREIGN KEY (resolution) REFERENCES Resolution(resolution);
+
+CREATE TABLE BugQA (
+	bug_id INTEGER NOT NULL,
+	account_id INTEGER NOT NULL,
+	PRIMARY KEY (bug_id, account_id)
+);
+
+CREATE TABLE BugDeveloper (
+	bug_id INTEGER NOT NULL,
+	account_id INTEGER NOT NULL,
+	PRIMARY KEY (bug_id, account_id)
+);
+
+CREATE TABLE BugManager (
+	bug_id INTEGER NOT NULL,
+	account_id INTEGER NOT NULL,
+	PRIMARY KEY (bug_id, account_id)
+);
     
 CREATE TABLE Comment (
     comment_id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY
@@ -128,6 +150,16 @@ INSERT INTO Product (name, version, manager_id) VALUES ('Another Project', '2.0-
     
 INSERT INTO Bug (product_id, resolution, state, open_date, steps, shortdesc) 
 	VALUES (1, 'IN PROGRESS', 'OPEN', CURRENT_TIMESTAMP, 'Do this', 'Stupid bug');
+
+INSERT INTO ProductQA (product_id, account_id) VALUES (1, 4);
+INSERT INTO ProductQA (product_id, account_id) VALUES (2, 4);
+
+INSERT INTO ProductDevelopers (product_id, account_id) VALUES (1, 3);
+INSERT INTO ProductDevelopers (product_id, account_id) VALUES (2, 3);
+
+INSERT INTO BugQA (bug_id, account_id) VALUES (1, 4);
+
+INSERT INTO BugDeveloper (bug_id, account_id) VALUES (1, 3);
 	
 INSERT INTO Comment (bug_id, comment, commenter_id) VALUES (1, 'This bug stinks', 1);
 INSERT INTO Comment (bug_id, comment, commenter_id) VALUES (1, 'Your opinion', 2);

@@ -10,6 +10,10 @@ public class Bug implements Comparable<Bug> {
 	String state;
 	String resolution="Not set";
 	java.util.Date opened;
+
+	Integer qaId;
+	Integer devId;
+	Integer managerId;
 	
 	//comments
 	String shortdesc;
@@ -90,5 +94,29 @@ public class Bug implements Comparable<Bug> {
 	
 	public int compareTo(Bug o) {
 		return this.getBugId().compareTo(o.getBugId());
+	}
+	
+	public Integer getQAId() {
+		return qaId;
+	}
+
+	public void setQAId(Integer qaId) {
+		this.qaId = qaId;
+	}
+
+	public Integer getDevId() {
+		return devId;
+	}
+
+	public void setDevId(Integer devId) {
+		this.devId = devId;
+	}
+
+	public Integer getManagerId() {
+		return managerId;
+	}
+
+	public void setManagerId(Integer managerId) {
+		this.managerId = managerId;
 	}
 }

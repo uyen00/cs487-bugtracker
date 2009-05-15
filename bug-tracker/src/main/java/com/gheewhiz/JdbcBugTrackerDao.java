@@ -51,7 +51,83 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 		}, keyHolder);
 		Integer bugId = keyHolder.getKey().intValue();
 		dbBug.setBugId(bugId);
+		dbBug.setQAId(addBugQA(bugId));
+		dbBug.setDevId(addBugDev(bugId));
 		return dbBug;
+	}
+	
+	Integer account;
+	public Integer addBugQA(Integer bugId)
+	{
+		
+		final Integer bug = bugId;
+		jdbcTemplate.query("select account_id from ProductQA where product_id in (select product_id from  Bug "
+				+ "where bug_id = ?)", new Object[] { bugId }, new RowCallbackHandler() {
+			public void processRow(ResultSet rs) throws SQLException {
+				account= rs.getInt("account_id");
+			}
+		});
+		
+		jdbcTemplate.update(new PreparedStatementCreator() {
+			public PreparedStatement createPreparedStatement(Connection con)
+					throws SQLException {
+				PreparedStatement ps = con
+						.prepareStatement(
+								"insert into BugQA (bug_id, account_id) values (?, ?)");
+				ps.setInt(1, bug);
+				ps.setInt(2, account);
+				
+				return ps;
+			}});
+		return account;
+	}
+	
+	public Integer addBugDev(Integer bugId)
+	{
+		
+		final Integer bug = bugId;
+		jdbcTemplate.query("select account_id from ProductDevelopers where product_id in (select product_id from  Bug "
+				+ "where bug_id = ?)", new Object[] { bugId }, new RowCallbackHandler() {
+			public void processRow(ResultSet rs) throws SQLException {
+				account= rs.getInt("account_id");
+			}
+		});
+		
+		jdbcTemplate.update(new PreparedStatementCreator() {
+			public PreparedStatement createPreparedStatement(Connection con)
+					throws SQLException {
+				PreparedStatement ps = con
+						.prepareStatement(
+								"insert into BugDeveloper (bug_id, account_id) values (?, ?)");
+				ps.setInt(1, bug);
+				ps.setInt(2, account);
+				
+				return ps;
+			}});
+		return account;
+	}
+	
+	public Integer getBugQA(Integer bugId)
+	{
+		jdbcTemplate.query("select account_id from BugQA where bug_id = ?", 
+				new Object[] { bugId }, new RowCallbackHandler() {
+			public void processRow(ResultSet rs) throws SQLException {
+				account= rs.getInt("account_id");
+			}
+		});
+		return account;
+	}
+	
+	public Integer getBugDev(Integer bugId)
+	{
+		account=0;
+		jdbcTemplate.query("select account_id from BugDeveloper where bug_id = ?", 
+				new Object[] { bugId }, new RowCallbackHandler() {
+			public void processRow(ResultSet rs) throws SQLException {
+				account= rs.getInt("account_id");
+			}
+		});
+		return account;
 	}
 
 	public Comment createComment(Comment comment) {
@@ -151,6 +227,8 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 				});
 		if (bugId.equals(bug.getBugId())) {			
 			bug.setComments(getComments(bugId));
+			bug.setQAId(getBugQA(bugId));
+			bug.setDevId(getBugDev(bugId));
 			return bug;
 		}
 		return null;
