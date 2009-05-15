@@ -145,8 +145,8 @@ INSERT INTO State (state) VALUES ('PENDING');
 INSERT INTO State (state) VALUES ('VERIFIED');
 INSERT INTO State (state) VALUES ('CLOSED');
 
-INSERT INTO Product (name, version, manager_id) VALUES ('Some Project', '1.0', 1);
-INSERT INTO Product (name, version, manager_id) VALUES ('Another Project', '2.0-beta', 1);
+INSERT INTO Product (name, version, manager_id) VALUES ('Some Project', '1.0', 2);
+INSERT INTO Product (name, version, manager_id) VALUES ('Another Project', '2.0-beta', 2);
     
 INSERT INTO Bug (product_id, resolution, state, open_date, steps, shortdesc) 
 	VALUES (1, 'IN PROGRESS', 'OPEN', CURRENT_TIMESTAMP, 'Do this', 'Stupid bug');
