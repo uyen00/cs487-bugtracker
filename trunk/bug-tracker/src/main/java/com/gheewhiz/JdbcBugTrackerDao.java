@@ -198,6 +198,20 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 		return products;
 	}
 	
+	public Set<Account> getAllAccounts() {
+		final Set<Account> accounts = new HashSet<Account>();
+		jdbcTemplate.query("select * from Account order by account_id asc", new RowCallbackHandler() {
+					public void processRow(ResultSet rs) throws SQLException {
+						Account account = new Account();
+						Integer accountId = rs.getInt("account_id");
+						account.setAccountId(accountId);
+						account.setScreenName(rs.getString("screen_name"));
+						accounts.add(account);
+					}
+				});
+		return accounts;
+	}
+	
 	public List<Integer> getProductIds() {
 		final List<Integer> products = new ArrayList<Integer>();
 		jdbcTemplate.query("select product_id from Product", new RowCallbackHandler() {

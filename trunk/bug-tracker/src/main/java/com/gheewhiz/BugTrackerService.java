@@ -82,6 +82,10 @@ public class BugTrackerService {
 		return bugTrackerDao.getAllProducts();
 	}
 	
+	public Set<Account> getAccounts() {
+		return bugTrackerDao.getAllAccounts();
+	}
+	
 	public List<Integer> getProductsIds() {
 		return bugTrackerDao.getProductIds();
 	}
