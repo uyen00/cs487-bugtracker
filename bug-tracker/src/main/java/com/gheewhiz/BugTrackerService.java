@@ -45,6 +45,10 @@ public class BugTrackerService {
 		return bugTrackerDao.getBugs(productId);
 	}
 	
+	public Set<Bug> getOpenBugs() {
+		return bugTrackerDao.getOpenBugs();
+	}
+	
 	public Bug getBug(Integer bugID) {
 		return bugTrackerDao.getBug(bugID);
 	}
