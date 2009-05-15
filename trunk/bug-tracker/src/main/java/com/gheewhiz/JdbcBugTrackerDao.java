@@ -199,7 +199,7 @@ public class JdbcBugTrackerDao implements BugTrackerDao {
 	}
 	
 	public Set<Account> getAllAccounts() {
-		final Set<Account> accounts = new HashSet<Account>();
+		final Set<Account> accounts = new TreeSet<Account>();
 		jdbcTemplate.query("select * from Account order by account_id asc", new RowCallbackHandler() {
 					public void processRow(ResultSet rs) throws SQLException {
 						Account account = new Account();

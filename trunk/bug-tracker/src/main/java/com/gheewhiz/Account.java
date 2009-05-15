@@ -3,7 +3,7 @@ package com.gheewhiz;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Account {
+public class Account implements Comparable<Account>{
 
 	Integer accountId;
 	String password;
@@ -62,5 +62,11 @@ public class Account {
 
 	public boolean isEntitledWIthAdmin() {
 		return getEntitlements().contains(Entitlement.ADMIN);
+	}
+	
+	public int compareTo(Account o) {
+		if(accountId == null)
+			return 0;
+		return getAccountId().compareTo(o.getAccountId());
 	}
 }
