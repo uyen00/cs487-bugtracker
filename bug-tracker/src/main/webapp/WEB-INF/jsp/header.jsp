@@ -35,7 +35,9 @@ function onlyNumbers(evt)
 	%>
 	<li><a href="./moderate.html">Moderate<span class="tab-l"></span><span
 		class="tab-r"></span></a></li>
-	<% } %>	
+	<% } %>
+	<li><a href="./list-users.html">Reports<span class="tab-l"></span><span
+		class="tab-r"></span></a></li>	
 	<li><a href="./products.html">Products<span class="tab-l"></span><span
 		class="tab-r"></span></a></li>
 	<li><a href="./personal.html">Account Info<span class="tab-l"></span><span

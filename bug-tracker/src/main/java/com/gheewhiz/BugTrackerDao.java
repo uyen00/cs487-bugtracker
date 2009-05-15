@@ -36,6 +36,8 @@ public interface BugTrackerDao {
 
 	public Set<ProductCategory> getAllProducts();
 	
+	public Set<Account> getAllAccounts();
+	
 	public List<Integer> getProductIds();
 
 	public Set<Bug> getBugs(Integer productId);
