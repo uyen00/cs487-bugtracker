@@ -1,0 +1,1 @@
+Bug tracking system by students of Illinois Institute of Technology for CS487 - Software Engineering course.
